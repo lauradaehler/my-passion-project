@@ -15,13 +15,17 @@ public class SkiMountainCLI {
     private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_SLOPES, MAIN_MENU_OPTION_SLOPE_INFO, MAIN_MENU_OPTION_EXIT};
 
 
-    private static final String SLOPE_INFO_MENU_OPTION_LIST_SLOPES_BY_DIFFICULTY = "Display of all slopes of chosen difficulty level";
+    private static final String SLOPE_INFO_MENU_OPTION_LIST_SLOPES_BY_DIFFICULTY = "Display all slopes of chosen difficulty level";
     private static final String SLOPE_INFO_MENU_OPTION_LIST_DIFFICULTY_BY_SLOPE_NAME = "Show difficulty level of a certain slope";
-
-    // TODO: decide on other menu option below
-    private static final String SLOPE_INFO_MENU_OPTION_OTHER_OPTION = "PLACEHOLDER*******";
     private static final String SLOPE_INFO_MENU_OPTION_BACK_TO_MAIN = "Back to main menu";
-    private static final String[] SLOPE_INFO_MENU_OPTIONS = { SLOPE_INFO_MENU_OPTION_LIST_SLOPES_BY_DIFFICULTY, SLOPE_INFO_MENU_OPTION_LIST_DIFFICULTY_BY_SLOPE_NAME, SLOPE_INFO_MENU_OPTION_OTHER_OPTION, SLOPE_INFO_MENU_OPTION_BACK_TO_MAIN};
+    private static final String[] SLOPE_INFO_MENU_OPTIONS = { SLOPE_INFO_MENU_OPTION_LIST_SLOPES_BY_DIFFICULTY, SLOPE_INFO_MENU_OPTION_LIST_DIFFICULTY_BY_SLOPE_NAME, SLOPE_INFO_MENU_OPTION_BACK_TO_MAIN};
+
+    private static final String SLOPE_INFO_MENU_A_OPTION_LIST_ALL_GREEN_CIRCLE_SLOPES = "Display all beginner slopes";
+    private static final String SLOPE_INFO_MENU_A_OPTION_LIST_ALL_BLUE_SQUARE_SLOPES = "Display all more difficult slopes";
+    private static final String SLOPE_INFO_MENU_A_OPTION_LIST_ALL_BLACK_DIAMOND_SLOPES = "Display all most difficult slopes";
+    private static final String SLOPE_INFO_MENU_A_OPTION_LIST_ALL_DOUBLE_BLACK_DIAMOND_SLOPES = "Display all expert slopes";
+    private static final String SLOPE_INFO_MENU_A_OPTION_LIST_ALL_TERRAIN_PARKS = "Display all terrain parks";
+    private static final String[] SLOPE_INFO_MENU_A_OPTIONS = {SLOPE_INFO_MENU_A_OPTION_LIST_ALL_GREEN_CIRCLE_SLOPES, SLOPE_INFO_MENU_A_OPTION_LIST_ALL_BLUE_SQUARE_SLOPES, SLOPE_INFO_MENU_A_OPTION_LIST_ALL_BLACK_DIAMOND_SLOPES, SLOPE_INFO_MENU_A_OPTION_LIST_ALL_DOUBLE_BLACK_DIAMOND_SLOPES, SLOPE_INFO_MENU_A_OPTION_LIST_ALL_TERRAIN_PARKS};
 
     private SlopeListBuilder slopeListBuilder = new SlopeListBuilder();
     private SlopeList slopeList = slopeListBuilder.build();
@@ -52,7 +56,7 @@ public class SkiMountainCLI {
                  }
 
             } else if (choice.equals(MAIN_MENU_OPTION_SLOPE_INFO)) {
-                 // TODO: slopeInfoMenu();
+                 slopeInfoMenu();
             } else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
                 System.out.println("Thank you, have fun shredding!");
                 break;
@@ -64,14 +68,53 @@ public class SkiMountainCLI {
         while (true) {
             String choice = (String) menu.getChoiceFromOptions(SLOPE_INFO_MENU_OPTIONS);
             if (choice.equals(SLOPE_INFO_MENU_OPTION_LIST_SLOPES_BY_DIFFICULTY)) {
-                // TODO: listSlopesByDifficulty();
+                slopeInfoMenuA();
             } else if (choice.equals(SLOPE_INFO_MENU_OPTION_LIST_DIFFICULTY_BY_SLOPE_NAME)) {
                 // TODO: getSlopeDifficulty();
-            } else if (choice.equals(SLOPE_INFO_MENU_OPTION_OTHER_OPTION)) {
-                // TODO: figure out what other method to put here
             } else if (choice.equals(SLOPE_INFO_MENU_OPTION_BACK_TO_MAIN)) {
-                // TODO: figure out how to get back to main, otherwise break
+                // TODO: figure out how to get back to main
+                break;
             }
         }
     }
+
+    private void slopeInfoMenuA() {
+        while (true) {
+            String choice = (String) menu.getChoiceFromOptions(SLOPE_INFO_MENU_A_OPTIONS);
+            if (choice.equals(SLOPE_INFO_MENU_A_OPTION_LIST_ALL_GREEN_CIRCLE_SLOPES)) {
+                for (SkiSlope slope : slopeList.getSlopeList()) {
+                    if (slope.getSlopeType().equals("Green Circle")) {
+                        System.out.println(slope);
+                    }
+                }
+            } else if (choice.equals(SLOPE_INFO_MENU_A_OPTION_LIST_ALL_BLUE_SQUARE_SLOPES)) {
+                for (SkiSlope slope : slopeList.getSlopeList()) {
+                    if (slope.getSlopeType().equals("Blue Square")) {
+                        System.out.println(slope);
+                    }
+                }
+            } else if (choice.equals(SLOPE_INFO_MENU_A_OPTION_LIST_ALL_BLACK_DIAMOND_SLOPES)) {
+                for (SkiSlope slope : slopeList.getSlopeList()) {
+                    if (slope.getSlopeType().equals("Black Diamond")) {
+                        System.out.println(slope);
+                    }
+                }
+            } else if (choice.equals(SLOPE_INFO_MENU_A_OPTION_LIST_ALL_DOUBLE_BLACK_DIAMOND_SLOPES)) {
+                for (SkiSlope slope : slopeList.getSlopeList()) {
+                    if (slope.getSlopeType().equals("Double Black Diamond")) {
+                        System.out.println(slope);
+                    }
+                }
+            } else if (choice.equals(SLOPE_INFO_MENU_A_OPTION_LIST_ALL_TERRAIN_PARKS)) {
+                for (SkiSlope slope : slopeList.getSlopeList()) {
+                    if (slope.getSlopeType().equals("Terrain Park")) {
+                        System.out.println(slope);
+                    }
+                }
+                break;
+            }
+
+        }
+    }
+
 }

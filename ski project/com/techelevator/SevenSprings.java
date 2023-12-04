@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class SevenSprings {
 // TODO see if i want to incorporate this original idea in somehow
-    
+
 //    private Map<SkiSlope, SlopeType> trailMap = new HashMap<>();
 //    private SlopeType blackDiamond = new SlopeType();
 //    private SlopeType blueSquare = new SlopeType();
