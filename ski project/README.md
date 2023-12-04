@@ -1,7 +1,7 @@
 Hi!! Welcome to my first side project. I have decided to make it skiing themed because I grew up skiing and love to ski in my spare time. This project specifically uses information from Seven Springs, where I ski most frequently.
 
 My end goal is to make an interactive list of ski slopes at a given mountain; as of right now, this is a backend project which uses a command line interface. This project was created and to be used in IntelliJ.
-To view the project, open SkiMountainCLI which can be found in com.techelevator and run the application. This will give the user a menu of options to choose from. As of right now, option 1 is functional, and the next options are a work in progress.
+To view the project, open the ski project directory in IntelliJ. Locate SkiMountainCLI which can be found in com.techelevator and run the application. This will give the user a menu of options to choose from. As of right now, option 1 is functional, and the next options are a work in progress.
 More specifics about what the project does are listed below:
 
 I have created a text file containing information about the slopes at Seven Springs, which is utilized by the SlopeListBuilder class I have created.
