@@ -1,1 +1,1 @@
-# my-passion-project
+# my-side-projects
