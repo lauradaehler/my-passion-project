@@ -12,4 +12,5 @@ The next step I am working on currently is creating a method to allow the user t
 After this, I will also create a method which will tell the user the difficulty level of a slope when provided with the slope's name.
 
 Eventually I would like to add more functionalities including more information on accessing slope's, such as a list of chairlifts that can be taken to get to different areas on the mountain.
-Thanks for reading! 
+
+I would love to hear if you try it out and have any comments or suggestions for improvement! Thanks for reading! 
