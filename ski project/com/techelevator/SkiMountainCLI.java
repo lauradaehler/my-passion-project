@@ -72,7 +72,7 @@ public class SkiMountainCLI {
             } else if (choice.equals(SLOPE_INFO_MENU_OPTION_LIST_DIFFICULTY_BY_SLOPE_NAME)) {
                 // TODO: getSlopeDifficulty();
             } else if (choice.equals(SLOPE_INFO_MENU_OPTION_BACK_TO_MAIN)) {
-                // TODO: figure out how to get back to main
+                // TODO: get back to main menu
                 break;
             }
         }
