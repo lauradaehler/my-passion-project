@@ -36,18 +36,18 @@ namespace MoviesApi.Controllers
         {
             return _movieRepository.InsertMovie(movie);
         }
-       
+
         [HttpPut("{id}")]
-        public Movie UpdateMovie(Movie movie, int id)
+        public Movie UpdateMovie([FromBody] Movie movie)
         {
-            return _movieRepository.UpdateMovie(movie, id);
+            return _movieRepository.UpdateMovie(movie);
         }
 
-        //[HttpGet]
-        //public bool MovieExists(int id)
-        //{
-        //    return _movieRepository.MovieExists(id);
-        //}
+        [HttpGet("{id}/movieExists")]
+        public bool MovieExists(int id)
+        {
+            return GetMovieById(id).ID != -1;
+        }
 
         [HttpDelete("{id}")]
         public bool DeleteMovie(int id)

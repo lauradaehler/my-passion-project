@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5054/api/Movies";
+const API_URL = "https://localhost:51505/api/Movies";
 
 async function api_getAll() {
   let response;

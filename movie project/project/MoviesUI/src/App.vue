@@ -3,6 +3,7 @@
 		<h1>Mayvue Movies Collection</h1>
 		<br/>
 		<MoviesTable />
+		<modal></modal>
 	</div>
 </template>
 

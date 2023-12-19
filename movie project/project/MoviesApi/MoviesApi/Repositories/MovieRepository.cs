@@ -13,22 +13,20 @@ namespace MoviesApi.Repositories
         private readonly string connectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=MotionPictures;Integrated Security=True;";
         public Movie GetMovieById(int id)
         {
-            string queryString =
-                "SELECT * from dbo.MotionPictures WHERE ID = @ID;";
+            string queryString = "SELECT * from dbo.MotionPictures WHERE ID = @ID;";
 
-            using (SqlConnection connection = new SqlConnection(
-                       connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand command = new SqlCommand(
-                    queryString, connection);
-                command.Parameters.Add("@ID", SqlDbType.Int);
-                command.Parameters["@ID"].Value = id;
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@ID", id);
 
                 connection.Open();
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     Movie movie = new Movie();
+
+                    movie.ID = -1;
 
                     while (reader.Read())
                     {
@@ -37,32 +35,24 @@ namespace MoviesApi.Repositories
                         movie.Description = reader["Description"].ToString();
                         movie.ReleaseYear = (int)reader["Release Year"];
                         movie.AcademyAward = (bool)reader["AcademyAward"];
-                        movie.DirectorId = reader["DirectorId"].GetType() == typeof(System.DBNull) ? null : (int)reader["DirectorId"];   
+                        movie.DirectorId = reader["DirectorId"].GetType() == typeof(System.DBNull) ? null : (int)reader["DirectorId"];
                     }
                     return movie;
 
-
                 }
 
-
             }
-
-            //throw new NotImplementedException();
-
 
         }
 
         public List<Movie> GetMovies()
         {
-            string queryString =
-                "SELECT * from dbo.MotionPictures;";
+            string queryString = "SELECT * from dbo.MotionPictures;";
             List<Movie> results = new List<Movie>();
 
-            using (SqlConnection connection = new SqlConnection(
-                       connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand command = new SqlCommand(
-                    queryString, connection);
+                SqlCommand command = new SqlCommand(queryString, connection);
                 connection.Open();
 
                 using (SqlDataReader reader = command.ExecuteReader())
@@ -87,43 +77,28 @@ namespace MoviesApi.Repositories
 
         public bool InsertMovie(Movie movie)
         {
-            string queryString =
-                "INSERT into dbo.MotionPictures ([Name], [Description], [Release Year], [AcademyAward], [DirectorId]) VALUES ('{Param[0]}','{Param[1]}','{Param[2]}','{Param[3]}', '{Param[4]}')";
+            string queryString = "INSERT into dbo.MotionPictures (Name, Description, Release Year, AcademyAward, DirectorId) VALUES (@Name,@Description,@Release Year,@AcademyAward,@DirectorId);";
+            int rowsAffected = 0;
 
-            using (SqlConnection connection = new SqlConnection(
-                       connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand command = new SqlCommand(
-                    queryString, connection);
+                SqlCommand command = new SqlCommand(queryString, connection);
                 connection.Open();
+
+                using (command)
                 {
-                    try
-                    {
-                        var result = command.ExecuteNonQuery();
-
-                        if (result > 0)
-                        {
-                            return true;
-                        }
-                    }
-                    catch (Exception)
-                    {
-
-                    }
-                    finally
-                    {
-                        connection.Close();
-                    }
-                    return false;
-
-
+                    command.Parameters.AddWithValue("@Name", movie.Name);
+                    command.Parameters.AddWithValue("@Description", movie.Description);
+                    command.Parameters.AddWithValue("@Release Year", movie.ReleaseYear);
+                    command.Parameters.AddWithValue("@AcademyAward", movie.AcademyAward);
+                    command.Parameters.AddWithValue("@DirectorId", movie.DirectorId);
+                    
+                    rowsAffected = command.ExecuteNonQuery();
+                    connection.Close();
                 }
-
-
-
+                
+                return rowsAffected > 0;
             }
-
-            throw new NotImplementedException();
         }
 
         public bool MovieExists(int id)
@@ -131,49 +106,72 @@ namespace MoviesApi.Repositories
             throw new NotImplementedException();
         }
 
-        public Movie UpdateMovie(Movie movie, int id)
+        public Movie UpdateMovie(Movie movie)
         {
-            string queryString =
-                "UPDATE dbo.MotionPictures ([Name], [Description], [Release Year], [AcademyAward], [DirectorId]) VALUES (?,?,?,?,?)";
+            string queryString = "UPDATE dbo.MotionPictures SET Name = @Name, Description = @Description, Release Year = @Release Year, AcademyAward = @AcademyAward, DirectorId = @DirectorId) WHERE ID = @ID";
+            int rowsAffected = 0;
 
-            using (SqlConnection connection = new SqlConnection(
-                       connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand command = new SqlCommand(
-                    queryString, connection);
+                try
+                { 
+                SqlCommand command = new SqlCommand(queryString, connection);
                 connection.Open();
-                throw new NotImplementedException();
+
+                    using (command)
+                    {
+                        command.Parameters.AddWithValue("@Name", movie.Name);
+                        command.Parameters.AddWithValue("@Description", movie.Description);
+                        command.Parameters.AddWithValue("@Release Year", movie.ReleaseYear);
+                        command.Parameters.AddWithValue("@AcademyAward", movie.AcademyAward);
+                        command.Parameters.AddWithValue("@DirectorId", movie.DirectorId);
+                        command.Parameters.AddWithValue("@ID", movie.ID);
+
+                        rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected != 0)
+                        {
+                            return movie;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.Write("There was an error");
+                        // TODO
+                }
+                finally
+                {
+                    connection.Close();
+                }
+                return null;
+
             }
         }
 
         public bool DeleteMovie(int id)
         {
-            string queryString =
-                "DELETE from dbo.MotionPictures WHERE ID = @ID;";
-            try
+            string queryString = "DELETE from dbo.MotionPictures WHERE ID = @ID;";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlConnection connection = new SqlConnection(
-                           connectionString))
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+
+                using (command)
                 {
-                    SqlCommand command = new SqlCommand(
-                        queryString, connection);
-                    command.Parameters.Add("@ID", SqlDbType.Int);
-                    command.Parameters["@ID"].Value = id;
+                    command.Parameters.AddWithValue("@ID", id);
 
                     int rowsAffected = command.ExecuteNonQuery();
                     if (rowsAffected == 0)
                     {
                         return false;
                     }
-
                     return true;
-                    //throw new NotImplementedException();
                 }
-            }
-            catch (Exception e)
-            {
-                return false;
+                
             }
         }
+
     }
+
 }
