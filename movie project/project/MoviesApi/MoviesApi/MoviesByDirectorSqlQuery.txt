@@ -1,0 +1,9 @@
+﻿SELECT [Name]
+      ,[Release Year]
+      ,[LastName]
+      ,[BirthYear]
+  FROM [MotionPictures].[dbo].[MotionPictures]
+
+  LEFT OUTER JOIN [MotionPictures].[dbo].[MotionPictureDirectors] ON ([MotionPictures].[dbo].[MotionPictureDirectors].[DirectorId] = [MotionPictures].[dbo].[MotionPictures].[DirectorId])
+
+WHERE [AcademyAward] = 0 
