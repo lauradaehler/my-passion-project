@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS [dbo].[MotionPictures];  
+GO
+
+DROP TABLE IF EXISTS [dbo].[MotionPictureDirectors];  
+GO
+
 CREATE TABLE [dbo].[MotionPictures](
 	[ID] [int] NOT NULL IDENTITY(1,1) PRIMARY KEY,
 	[Name] [nvarchar](50) NOT NULL,

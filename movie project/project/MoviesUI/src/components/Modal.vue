@@ -1,11 +1,14 @@
 <template>
     <div class="modal-overlay">
-        <div class="edit-modal">
-            <h3>Edit Movie</h3>
+        <form class="edit-modal" v-on:submit.prevent="saveMovie">
+            <div class="modal-header">
+			<slot name="header">Close</slot>
+		    </div>
+            <h3>Movie Info</h3>
             <br>
 
             <div>Name
-                <input id="movieName" type="text" v-model="updatedMovie.name">
+                <input class="field" id="movieName" type="text" v-model="updatedMovie.name" required>
             </div>
             <br>
             
@@ -16,12 +19,12 @@
             <br>
 
             <div>Release Year
-                <input id="movieReleaseYear" type="text" v-model="updatedMovie.releaseYear">
+                <input id="movieReleaseYear" type="text" v-model="updatedMovie.releaseYear" required>
             </div>
             <br>
 
             <div>Academy Award
-                <input id="movieAcademyAward" type="checkbox" v-model="updatedMovie.academyAward">
+                <input id="movieAcademyAward" type="checkbox" v-model="updatedMovie.academyAward" required>
             </div>
             <br>
 
@@ -29,11 +32,21 @@
                 <input id="movieDirectorId" type="text" v-model="updatedMovie.directorId">
             </div>
             <br>
-            
-            <div class="close" v-on:click="modalVisible = false">
-                Close
+
+            <div class="modal-footer">
+			<slot name="footer">
+                
+                <button class="modal-button" v-on:click.prevent="infoModalVisible = false">
+                    Close
+                </button>
+            </slot>
+		    </div>
+
+            <div class="save-container">
+                <button class="cancel"  v-on:click.prevent="infoModalVisible = false">Cancel</button>
+                <input class="submit" type="submit" value="Save">
             </div>
-        </div>
+        </form>
     </div>
 </template>
 
@@ -41,7 +54,7 @@
     export default {
         data() {
             return {
-                modalVisible: false,
+                infoModalVisible: false,
                 updatedMovie: {
                     id: 0,
                     name: '',
@@ -53,9 +66,9 @@
             }
         },
         methods: {
-            close() {
-                this.$emit('close');
-            }
+            closeModal() {
+            },
+            saveMovie() {}  
         }
     };
 </script>
@@ -71,13 +84,34 @@
 	justify-content: center;
     background-color: #000000cc;
 }
+
 .edit-modal {
-    text-align: left;
-    background-color: white;
-    height: fit-content;;
-    width: 500px;
+    background-color: rgb(255, 188, 220);
+    color: rgb(255, 27, 133);
+    height: fit-content;
+    width: fit-content;
     margin: auto;
     padding: 20px;
     border-radius: 15px;
+    font-weight: 550;
 }
+
+h3 {
+    text-align: center;
+}
+
+.save-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cancel, .save, .submit {
+    border-radius: 8px;
+	background-color: rgb(255, 27, 133);
+	border-width: 0cap;
+	color: rgb(255, 251, 253);
+    margin-left: 5px;
+}
+
+
 </style>
