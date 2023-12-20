@@ -1,38 +1,38 @@
 <template>
-    <div class="modal">
-        <div class="modal-content">
-            <b-modal>
-                <b-form-group>Name
-                    <b-form-input id="movieName" type="text" v-model="editMovie.name">
-                    </b-form-input>
-                </b-form-group>
+    <div class="modal-overlay">
+        <div class="edit-modal">
+            <h3>Edit Movie</h3>
+            <br>
 
-                <b-form-group>Description
-                    <b-form-textarea id="movieDescription" v-model="editMovie.description" rows="3">
-                    </b-form-textarea>
-                </b-form-group>
-
-                <b-form-group>Release Year
-                    <b-form-input id="movieReleaseYear" type="text" v-model="editMovie.releaseYear">
-                    </b-form-input>
-                </b-form-group>
-
-                <b-form-group>Academy Award
-                    <b-form-checkbox id="movieAcademyAward" v-model="editMovie.academyAward">
-                    </b-form-checkbox>
-                </b-form-group>
-
-                <b-form-group>DirectorId
-                    <b-form-input id="movieDirectorId" type="text" v-model="editMovie.directorId">
-                    </b-form-input>
-                </b-form-group>
-            </b-modal>
+            <div>Name
+                <input id="movieName" type="text" v-model="updatedMovie.name">
+            </div>
+            <br>
             
-            <!-- <button type="button" class="button-close" v-on:click="close">
-                x
-            </button> -->
+            <div>Description
+                <textarea id="movieDescription" v-model="updatedMovie.description" rows="3">
+                </textarea>
+            </div>
+            <br>
 
+            <div>Release Year
+                <input id="movieReleaseYear" type="text" v-model="updatedMovie.releaseYear">
+            </div>
+            <br>
 
+            <div>Academy Award
+                <input id="movieAcademyAward" type="checkbox" v-model="updatedMovie.academyAward">
+            </div>
+            <br>
+
+            <div>Director Id
+                <input id="movieDirectorId" type="text" v-model="updatedMovie.directorId">
+            </div>
+            <br>
+            
+            <div class="close" v-on:click="modalVisible = false">
+                Close
+            </div>
         </div>
     </div>
 </template>
@@ -41,37 +41,43 @@
     export default {
         data() {
             return {
-                editMovie: {
+                modalVisible: false,
+                updatedMovie: {
                     id: 0,
                     name: '',
                     description: '',
                     releaseYear: '',
                     academyAward: '',
                     directorId: ''
-
-
-                }
+			}
             }
         },
         methods: {
-            editMovie(movie) {
-                this.editMovie.id = movie.id;
-                this.editMovie.name = movie.name;
-                this.editMovie.description = movie.description;
-                this.editMovie.releaseYear = movie.releaseYear;
-                this.editMovie.academyAward = movie.academyAward;
-                this.editMovie.directorId = movie.directorId;
-            },
-            
+            close() {
+                this.$emit('close');
+            }
         }
-    }
+    };
 </script>
 
 <style>
-.modal {
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.modal-overlay {
+	position: fixed;
+    top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	justify-content: center;
+    background-color: #000000cc;
+}
+.edit-modal {
+    text-align: left;
+    background-color: white;
+    height: fit-content;;
+    width: 500px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 15px;
 }
 </style>

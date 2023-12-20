@@ -19,7 +19,7 @@
 					<td>{{ movie.academyAward }}</td>
 					<td>{{ movie.directorId }}</td>
 					<td>
-						<span class="clickable m-2" v-on:click="editMovie(movie)">
+						<span class="clickable m-2" v-on:click.prevent="showModal">
 							<font-awesome-icon icon="fa-solid fa-pen-to-square" />
 						</span>
 						<span class="clickable m-2">
@@ -29,55 +29,33 @@
 				</tr>
 			</tbody>
 		</table>
+
 	</div>
 
-	<div class="modal">
-        <div class="modal-content">
-            <b-modal>
-                <b-form-group>Name
-                    <b-form-input id="movieName" type="text" v-model="editMovie.name">
-                    </b-form-input>
-                </b-form-group>
+	<div>
+		<button v-on:click="modalVisible = true">Modal</button>
+	</div>
 
-                <b-form-group>Description
-                    <b-form-textarea id="movieDescription" v-model="editMovie.description" rows="3">
-                    </b-form-textarea>
-                </b-form-group>
-
-                <b-form-group>Release Year
-                    <b-form-input id="movieReleaseYear" type="text" v-model="editMovie.releaseYear">
-                    </b-form-input>
-                </b-form-group>
-
-                <b-form-group>Academy Award
-                    <b-form-checkbox id="movieAcademyAward" v-model="editMovie.academyAward">
-                    </b-form-checkbox>
-                </b-form-group>
-
-                <b-form-group>DirectorId
-                    <b-form-input id="movieDirectorId" type="text" v-model="editMovie.directorId">
-                    </b-form-input>
-                </b-form-group>
-            </b-modal>
-            
-            <!-- <button type="button" class="button-close" v-on:click="close">
-                x
-            </button> -->
+		<modal v-show="modalVisible" @close="closeModal"></modal>
 
 
-        </div>
-    </div>
+
 </template>
 
 <script>
 import { api_getAll, api_post, api_put, api_delete } from "../api.js";
+import Modal from "./Modal.vue";
 
 export default {
+	components: {
+		Modal
+	},
 	props: [],
 	data() {
 		return {
+			modalVisible: false,
 			movies: [],
-			editMovie: {
+			updatedMovie: {
                     id: 0,
                     name: '',
                     description: '',
@@ -90,6 +68,7 @@ export default {
 	async mounted() {
 		this.getMovies();
 	},
+
 	methods: {
 		async getMovies() {
 			let response = await api_getAll();
@@ -101,21 +80,26 @@ export default {
 			}
 		},
 		editMovie(movie) {
-                this.editMovie.id = movie.id;
-                this.editMovie.name = movie.name;
-                this.editMovie.description = movie.description;
-                this.editMovie.releaseYear = movie.releaseYear;
-                this.editMovie.academyAward = movie.academyAward;
-                this.editMovie.directorId = movie.directorId;
+                this.updatedMovie.id = movie.id;
+                this.updatedMovie.name = movie.name;
+                this.updatedMovie.description = movie.description;
+                this.updatedMovie.releaseYear = movie.releaseYear;
+                this.updatedMovie.academyAward = movie.academyAward;
+                this.updatedMovie.directorId = movie.directorId;
 		},
 		showModal() {
-                this.$refs['modal'].show();
+			this.modalVisible = true;
+		},
+		closeModal() {
+			this.modalVisible = false;
 		}
+		
 	},
 }
 </script>
 
 <style scoped>
+
 .clickable {
   cursor: pointer;
   user-select: none;
