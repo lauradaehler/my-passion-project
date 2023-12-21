@@ -1,9 +1,9 @@
 <template>
     <div class="modal-overlay">
         <form class="edit-modal" v-on:submit.prevent="saveMovie">
-            <div class="modal-header">
+            <!-- <div class="modal-header">
 			<slot name="header">Close</slot>
-		    </div>
+		    </div> -->
             <h3>Movie Info</h3>
             <br>
 
@@ -33,18 +33,20 @@
             </div>
             <br>
 
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
 			<slot name="footer">
                 
                 <button class="modal-button" v-on:click.prevent="infoModalVisible = false">
                     Close
                 </button>
             </slot>
-		    </div>
+		    </div> -->
 
-            <div class="save-container">
-                <button class="cancel"  v-on:click.prevent="infoModalVisible = false">Cancel</button>
-                <input class="submit" type="submit" value="Save">
+            <div class="button-container">
+                <button class="cancel"  v-on:click="cancel">Cancel</button>
+                <button class="save" type="submit">Save</button>
+
+                <!-- <input class="save" type="submit" value="Save" v-on:click.prevent="saveMovie"> -->
             </div>
         </form>
     </div>
@@ -68,7 +70,15 @@
         methods: {
             closeModal() {
             },
-            saveMovie() {}  
+            saveMovie() {
+                this.$emit('child-event', this.updatedMovie);
+                this.updatedMovie = {}
+            },
+            cancel() {
+                this.$emit('child-event', 'cancel');
+                this.updatedMovie = {}
+            },
+
         }
     };
 </script>
@@ -100,7 +110,7 @@ h3 {
     text-align: center;
 }
 
-.save-container {
+.button-container {
     display: flex;
     justify-content: flex-end;
 }

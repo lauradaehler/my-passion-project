@@ -20,7 +20,9 @@ namespace MoviesApi
                 options.AddPolicy(name: "AllowAllForTest",
                     policy =>
                     {
-                        policy.WithOrigins("*");
+                        policy.WithOrigins("*")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
                     });
             });
 

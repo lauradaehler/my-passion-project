@@ -33,7 +33,7 @@ namespace MoviesApi.Repositories
                         movie.ID = (int)reader["ID"];
                         movie.Name = reader["Name"].ToString();
                         movie.Description = reader["Description"].ToString();
-                        movie.ReleaseYear = (int)reader["Release Year"];
+                        movie.ReleaseYear = (int)reader["ReleaseYear"];
                         movie.AcademyAward = (bool)reader["AcademyAward"];
                         movie.DirectorId = reader["DirectorId"].GetType() == typeof(System.DBNull) ? null : (int)reader["DirectorId"];
                     }
@@ -64,7 +64,7 @@ namespace MoviesApi.Repositories
                             ID = (int)reader["ID"],
                             Name = reader["Name"].ToString(),
                             Description = reader["Description"].ToString(),
-                            ReleaseYear = (int)reader["Release Year"],
+                            ReleaseYear = (int)reader["ReleaseYear"],
                             AcademyAward = (bool)reader["AcademyAward"],
                             DirectorId = reader["DirectorId"].GetType() == typeof(System.DBNull) ? null : (int)reader["DirectorId"]
                         });
@@ -77,7 +77,7 @@ namespace MoviesApi.Repositories
 
         public bool InsertMovie(Movie movie)
         {
-            string queryString = "INSERT into dbo.MotionPictures (Name, Description, Release Year, AcademyAward, DirectorId) VALUES (@Name,@Description,@Release Year,@AcademyAward,@DirectorId);";
+            string queryString = "INSERT into dbo.MotionPictures (Name, Description, ReleaseYear, AcademyAward, DirectorId) VALUES (@Name,@Description,@ReleaseYear,@AcademyAward,@DirectorId);";
             int rowsAffected = 0;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -89,7 +89,7 @@ namespace MoviesApi.Repositories
                 {
                     command.Parameters.AddWithValue("@Name", movie.Name);
                     command.Parameters.AddWithValue("@Description", movie.Description);
-                    command.Parameters.AddWithValue("@Release Year", movie.ReleaseYear);
+                    command.Parameters.AddWithValue("@ReleaseYear", movie.ReleaseYear);
                     command.Parameters.AddWithValue("@AcademyAward", movie.AcademyAward);
                     command.Parameters.AddWithValue("@DirectorId", movie.DirectorId);
                     
@@ -108,7 +108,7 @@ namespace MoviesApi.Repositories
 
         public Movie UpdateMovie(Movie movie)
         {
-            string queryString = "UPDATE dbo.MotionPictures SET Name = @Name, Description = @Description, Release Year = @Release Year, AcademyAward = @AcademyAward, DirectorId = @DirectorId) WHERE ID = @ID";
+            string queryString = "UPDATE dbo.MotionPictures SET Name = @Name, Description = @Description, ReleaseYear = @ReleaseYear, AcademyAward = @AcademyAward, DirectorId = @DirectorId) WHERE ID = @ID";
             int rowsAffected = 0;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -122,7 +122,7 @@ namespace MoviesApi.Repositories
                     {
                         command.Parameters.AddWithValue("@Name", movie.Name);
                         command.Parameters.AddWithValue("@Description", movie.Description);
-                        command.Parameters.AddWithValue("@Release Year", movie.ReleaseYear);
+                        command.Parameters.AddWithValue("@ReleaseYear", movie.ReleaseYear);
                         command.Parameters.AddWithValue("@AcademyAward", movie.AcademyAward);
                         command.Parameters.AddWithValue("@DirectorId", movie.DirectorId);
                         command.Parameters.AddWithValue("@ID", movie.ID);
@@ -134,7 +134,7 @@ namespace MoviesApi.Repositories
                         }
                     }
                 }
-                catch (Exception e)
+                catch (SqlException e)
                 {
                     Console.Write("There was an error");
                         // TODO

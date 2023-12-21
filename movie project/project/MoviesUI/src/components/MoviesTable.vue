@@ -37,10 +37,7 @@
 
 	
 
-	<modal v-show="infoModalVisible">
-		<div slot="header">
-			<button class="modal-button" v-on:click.prevent="infoModalVisible = false">Close</button>
-		</div>
+	<modal v-show="infoModalVisible" @child-event="handleChildEvent">
 	</modal>
 	
 
@@ -81,6 +78,9 @@ export default {
                     releaseYear: '',
                     academyAward: '',
                     directorId: ''
+			},
+			movieToAdd: {
+
 			}
 		}
 	},
@@ -98,6 +98,18 @@ export default {
 				this.movies = response;
 			}
 		},
+		async addMovie() {
+			let response = await api_post(this.movieToAdd);
+
+			if(response == null) {
+
+			} else {
+				// this.movies.push(this.updatedMovie);
+				this.closeInfoModal();
+			}
+		},
+
+
 		editMovie(movie) {
 			this.updatedMovie.id = movie.id;
 			this.updatedMovie.name = movie.name;
@@ -106,12 +118,12 @@ export default {
 			this.updatedMovie.academyAward = movie.academyAward;
 			this.updatedMovie.directorId = movie.directorId;
 		},
-		deleteMovie(movie) {
-			let response = api_delete(movie.id);
+
+		async deleteMovie(movie) {
+			console.log(movie)
+			let response = await api_delete(movie.id);
 
 			if(response == true){
-				this.movies = response;
-				// this.getMovies();
 				this.deleteConfirmed = true;
 			} else {
 				console.log("There was an error deleting this movie.");
@@ -122,6 +134,19 @@ export default {
 		},
 		closeInfoModal() {
 			this.infoModalVisible = false;
+		},
+		handleChildEvent(payload) {
+			if (payload == 'cancel') {
+				this.closeInfoModal();
+			} else if (payload == null) {
+				console.log("error")
+			} else {
+				console.log('Received event from modal:', payload);
+				this.movieToAdd = payload;
+				this.addMovie();
+				this.closeInfoModal();
+
+			}
 		}
 		
 	},

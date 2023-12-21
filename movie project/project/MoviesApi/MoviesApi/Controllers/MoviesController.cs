@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using MoviesApi.Models;
 using MoviesApi.Repositories;
-
+using System.Data.SqlClient;
+using System.Net;
 
 namespace MoviesApi.Controllers
 {
@@ -34,13 +35,21 @@ namespace MoviesApi.Controllers
         [HttpPost]
         public bool InsertMovie(Movie movie)
         {
+            Console.WriteLine("blah blah test");
+
             return _movieRepository.InsertMovie(movie);
         }
 
         [HttpPut("{id}")]
-        public Movie UpdateMovie([FromBody] Movie movie)
+        public ActionResult<Movie> UpdateMovie([FromBody] Movie movie)
         {
-            return _movieRepository.UpdateMovie(movie);
+            try
+            {
+                return _movieRepository.UpdateMovie(movie);
+            } catch (SqlException ex)
+            {
+                return BadRequest("SQL error occurred.");
+            }
         }
 
         [HttpGet("{id}/movieExists")]
@@ -52,6 +61,7 @@ namespace MoviesApi.Controllers
         [HttpDelete("{id}")]
         public bool DeleteMovie(int id)
         {
+            Console.WriteLine("delete" + id);
             return _movieRepository.DeleteMovie(id);
         }
 

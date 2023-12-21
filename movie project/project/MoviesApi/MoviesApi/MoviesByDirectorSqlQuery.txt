@@ -1,5 +1,5 @@
 ﻿SELECT [Name]
-      ,[Release Year]
+      ,[ReleaseYear]
       ,[LastName]
       ,[BirthYear]
   FROM [MotionPictures].[dbo].[MotionPictures]
