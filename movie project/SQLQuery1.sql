@@ -8,7 +8,7 @@ CREATE TABLE [dbo].[MotionPictures](
 	[ID] [int] NOT NULL IDENTITY(1,1) PRIMARY KEY,
 	[Name] [nvarchar](50) NOT NULL,
 	[Description] [nvarchar](500) NULL,
-	[Release Year] [int] NOT NULL,
+	[ReleaseYear] [int] NOT NULL,
 	[AcademyAward] [bit] NOT NULL,
 	[DirectorId] [int] NULL
 ) ON [PRIMARY]
@@ -61,7 +61,7 @@ GO
 INSERT INTO [dbo].[MotionPictures]
             ([Name]
            ,[Description]
-           ,[Release Year]
+           ,[ReleaseYear]
 		   ,[AcademyAward]
 		   ,[DirectorId])
      VALUES
@@ -74,7 +74,7 @@ INSERT INTO [dbo].[MotionPictures]
 INSERT INTO [dbo].[MotionPictures]
            ([Name]
            ,[Description]
-           ,[Release Year]
+           ,[ReleaseYear]
 		   ,[AcademyAward]
 		   ,[DirectorId])
      VALUES
@@ -87,7 +87,7 @@ INSERT INTO [dbo].[MotionPictures]
 INSERT INTO [dbo].[MotionPictures]
            ([Name]
            ,[Description]
-           ,[Release Year]
+           ,[ReleaseYear]
 		   ,[AcademyAward]
 		   ,[DirectorId])
      VALUES
@@ -100,7 +100,7 @@ INSERT INTO [dbo].[MotionPictures]
 INSERT INTO [dbo].[MotionPictures]
           ([Name]
            ,[Description]
-           ,[Release Year]
+           ,[ReleaseYear]
 		   ,[AcademyAward]
 		   ,[DirectorId])
      VALUES
@@ -113,7 +113,7 @@ INSERT INTO [dbo].[MotionPictures]
 INSERT INTO [dbo].[MotionPictures]
            ([Name]
            ,[Description]
-           ,[Release Year]
+           ,[ReleaseYear]
 		   ,[AcademyAward]
 		   ,[DirectorId])
      VALUES
@@ -126,7 +126,7 @@ INSERT INTO [dbo].[MotionPictures]
 INSERT INTO [dbo].[MotionPictures]
           ([Name]
            ,[Description]
-           ,[Release Year]
+           ,[ReleaseYear]
 		   ,[AcademyAward]
 		   ,[DirectorId])
      VALUES

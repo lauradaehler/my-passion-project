@@ -1,5 +1,5 @@
 <template>
-	<div class="add-container" v-on:click.prevent="showInfoModal">
+	<div class="add-container" v-on:click.prevent="showAddMovieModal">
 		<button class="add-movie">Add Movie</button>
 	</div>
 	<div id="moviesTable">
@@ -22,10 +22,10 @@
 					<td>{{ movie.academyAward }}</td>
 					<td>{{ movie.directorId }}</td>
 					<td>
-						<span class="clickable m-2" v-on:click.prevent="showInfoModal">
+						<span class="clickable m-2" v-on:click.prevent="showUpdateMovieModal">
 							<font-awesome-icon icon="fa-solid fa-pen-to-square" />
 						</span>
-						<span class="clickable m-2" v-on:click.prevent="deleteMovie(movie)">
+						<span class="clickable m-2" v-on:click.prevent="showDeleteModal(movie)">
 							<font-awesome-icon icon="fa-solid fa-trash" />
 						</span>
 					</td>
@@ -37,53 +37,61 @@
 
 	
 
-	<modal v-show="infoModalVisible" @child-event="handleChildEvent">
-	</modal>
+	<add-movie-modal v-show="addMovieModalVisible" @child-event="handleChildEvent">
+	</add-movie-modal>
+
+	<update-movie-modal v-show="updateMovieModalVisible" @child-event="handleChildEvent"></update-movie-modal>
+
 	
 
-	<div class="modal-overlay" v-show="this.deleteConfirmed">
-        <div class="confirmation-modal">
+	<div class="modal-overlay" v-show="deleteModalVisible">
+		<form class="delete-modal">
+			
+			<h3>Are you sure you want to delete this movie?</h3>
+		
+			<div class="button-container">
+                <button class="cancel" v-on:click="closeDeleteModal">Cancel</button>
+                <button class="save" v-on:click="deleteMovie(this.movieToDelete)">Yes</button>
+            </div>
+		</form>
+	</div>
+
+	<div class="modal-overlay" v-show="deleteSuccessfulVisible">
+        <form class="delete-successful-modal" v-on:submit="closeDeleteSuccessfulModal">
             <h3>Movie has been deleted.</h3>
-		</div>
+
+			<div class="button-container">
+                <button class="submit">Close</button>
+            </div>
+		</form>
 	</div>
-
-	<div>
-		<button v-on:click="deleteConfirmed = true">Modal</button>
-	</div>
-
-
-
-
 
 </template>
 
 <script>
 import { api_getAll, api_post, api_put, api_delete } from "../api.js";
-import Modal from "./Modal.vue";
+import AddMovieModal from "./AddMovieModal.vue";
+import UpdateMovieModal from "./UpdateMovieModal.vue";
 
 export default {
 	components: {
-		Modal
+		AddMovieModal,
+		UpdateMovieModal
 	},
 	
 	data() {
 		return {
-			infoModalVisible: false,
-			deleteConfirmed: false,
+			addMovieModalVisible: false,
+			updateMovieModalVisible: false,
+			deleteModalVisible: false,
+			deleteSuccessfulVisible: false,
 			movies: [],
-			updatedMovie: {
-                    id: 0,
-                    name: '',
-                    description: '',
-                    releaseYear: '',
-                    academyAward: '',
-                    directorId: ''
-			},
-			movieToAdd: {
-
-			}
+			movieToAdd: {},
+			movieToUpdate: {},
+			movieToDelete: {}
 		}
 	},
+	
 	async mounted() {
 		this.getMovies();
 	},
@@ -98,53 +106,100 @@ export default {
 				this.movies = response;
 			}
 		},
+
 		async addMovie() {
 			let response = await api_post(this.movieToAdd);
 
-			if(response == null) {
-
-			} else {
-				// this.movies.push(this.updatedMovie);
-				this.closeInfoModal();
-			}
-		},
-
-
-		editMovie(movie) {
-			this.updatedMovie.id = movie.id;
-			this.updatedMovie.name = movie.name;
-			this.updatedMovie.description = movie.description;
-			this.updatedMovie.releaseYear = movie.releaseYear;
-			this.updatedMovie.academyAward = movie.academyAward;
-			this.updatedMovie.directorId = movie.directorId;
-		},
-
-		async deleteMovie(movie) {
-			console.log(movie)
-			let response = await api_delete(movie.id);
-
-			if(response == true){
-				this.deleteConfirmed = true;
+			if(response == true) {
+				this.closeAddMovieModal();
+				this.getMovies();
 			} else {
 				console.log("There was an error deleting this movie.");
 			}
 		},
-		showInfoModal() {
-			this.infoModalVisible = true;
+
+		async updateMovie(movieToUpdate) {
+			let response = await api_put(this.movieToUpdate);
+
+			if(response != null) {
+				console.log("hi");
+				this.getMovies();
+			} else {
+				console.log("There was an error updating this movie.");
+			}
 		},
-		closeInfoModal() {
-			this.infoModalVisible = false;
+
+		async deleteMovie(movieToDelete) {
+			let response = await api_delete(movieToDelete.id);
+
+			if(response == true){
+				this.showDeleteSuccessfulModal();
+			} else {
+				console.log("There was an error deleting this movie.");
+			}
+		},
+
+		// editMovie(movie) {
+		// 	this.updatedMovie.id = movie.id;
+		// 	this.updatedMovie.name = movie.name;
+		// 	this.updatedMovie.description = movie.description;
+		// 	this.updatedMovie.releaseYear = movie.releaseYear;
+		// 	this.updatedMovie.academyAward = movie.academyAward;
+		// 	this.updatedMovie.directorId = movie.directorId;
+		// },
+
+		
+		showAddMovieModal() {
+			this.addMovieModalVisible = true;
+		},
+		closeAddMovieModal() {
+			this.addMovieModalVisible = false;
+		},
+		showUpdateMovieModal() {
+			this.updateMovieModalVisible = true;
+		},
+		closeUpdateMovieModal() {
+			this.updateMovieModalVisible = false;
+		},
+		showDeleteModal(movie) {
+			this.movieToDelete = movie;
+			this.deleteModalVisible = true;
+		},
+		closeDeleteModal() {
+			this.deleteModalVisible = false;
+		},
+		showDeleteSuccessfulModal() {
+			this.deleteSuccessfulVisible = true;
+		},
+		closeDeleteSuccessfulModal() {
+			this.deleteSuccessfulVisible = false;
 		},
 		handleChildEvent(payload) {
 			if (payload == 'cancel') {
-				this.closeInfoModal();
-			} else if (payload == null) {
-				console.log("error")
-			} else {
+				this.closeAddMovieModal();
+				this.closeUpdateMovieModal();
+			} else if (payload.id == 0) {
 				console.log('Received event from modal:', payload);
 				this.movieToAdd = payload;
 				this.addMovie();
-				this.closeInfoModal();
+				this.closeAddMovieModal();
+			} else if (payload.id == -1) {
+				console.log('Received event from modal:', payload);
+
+				console.log("update movie")
+				this.movieToUpdate = payload;
+				console.log(this.movieToUpdate);
+
+				this.updateMovie(this.movieToUpdate);
+				this.closeUpdateMovieModal();
+			}
+			 else if (payload == null) {
+				console.log("error")
+			} else {
+				// console.log('Received event from modal:', payload);
+				// this.movieToAdd = payload;
+				// this.addMovie();
+				// this.closeInfoModal();
 
 			}
 		}
@@ -181,7 +236,7 @@ export default {
 	justify-content: center;
     background-color: #000000cc;
 }
-.confirmation-modal {
+.delete-modal, .delete-successful-modal {
     text-align: left;
     background-color: rgb(255, 188, 220);
     color: rgb(255, 27, 133);

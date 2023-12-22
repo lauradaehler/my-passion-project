@@ -1,52 +1,41 @@
 <template>
     <div class="modal-overlay">
-        <form class="edit-modal" v-on:submit.prevent="saveMovie">
-            <!-- <div class="modal-header">
-			<slot name="header">Close</slot>
-		    </div> -->
-            <h3>Movie Info</h3>
+        <form class="add-movie-modal" v-on:submit.prevent="saveMovie">
+            
+            <h3>Add a New Movie</h3>
             <br>
 
-            <div>Name
-                <input class="field" id="movieName" type="text" v-model="updatedMovie.name" required>
+            <div>Name of Movie&colon;
+                <input class="field" id="movieName" type="text" v-model="addedMovie.name" required>
             </div>
             <br>
             
-            <div>Description
-                <textarea id="movieDescription" v-model="updatedMovie.description" rows="3">
+            <div>Description&colon;
+                <textarea id="movieDescription" v-model="addedMovie.description" rows="3">
                 </textarea>
             </div>
             <br>
 
-            <div>Release Year
-                <input id="movieReleaseYear" type="text" v-model="updatedMovie.releaseYear" required>
+            <div>Release Year&colon;
+                <input id="movieReleaseYear" type="text" v-model="addedMovie.releaseYear" required>
             </div>
             <br>
 
-            <div>Academy Award
-                <input id="movieAcademyAward" type="checkbox" v-model="updatedMovie.academyAward" required>
+            <div>Academy Award&colon;
+                Yes <input id="movieAcademyAward" type="checkbox" v-model="addedMovie.academyAward">
+                No <input id="movieAcademyAward" type="checkbox" v-model="addedMovie.academyAward" required>
+
             </div>
             <br>
 
-            <div>Director Id
-                <input id="movieDirectorId" type="text" v-model="updatedMovie.directorId">
+            <div>Director Id&colon;
+                <input id="movieDirectorId" type="text" v-model="addedMovie.directorId">
             </div>
             <br>
-
-            <!-- <div class="modal-footer">
-			<slot name="footer">
-                
-                <button class="modal-button" v-on:click.prevent="infoModalVisible = false">
-                    Close
-                </button>
-            </slot>
-		    </div> -->
 
             <div class="button-container">
                 <button class="cancel"  v-on:click="cancel">Cancel</button>
                 <button class="save" type="submit">Save</button>
-
-                <!-- <input class="save" type="submit" value="Save" v-on:click.prevent="saveMovie"> -->
             </div>
         </form>
     </div>
@@ -56,8 +45,7 @@
     export default {
         data() {
             return {
-                infoModalVisible: false,
-                updatedMovie: {
+                addedMovie: {
                     id: 0,
                     name: '',
                     description: '',
@@ -68,15 +56,13 @@
             }
         },
         methods: {
-            closeModal() {
-            },
             saveMovie() {
-                this.$emit('child-event', this.updatedMovie);
-                this.updatedMovie = {}
+                this.$emit('child-event', this.addedMovie);
+                this.addedMovie = {}
             },
             cancel() {
                 this.$emit('child-event', 'cancel');
-                this.updatedMovie = {}
+                this.addedMovie = {}
             },
 
         }
@@ -95,7 +81,7 @@
     background-color: #000000cc;
 }
 
-.edit-modal {
+.add-movie-modal {
     background-color: rgb(255, 188, 220);
     color: rgb(255, 27, 133);
     height: fit-content;
