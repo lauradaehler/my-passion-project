@@ -42,20 +42,35 @@
 
 <script>
     export default {
+        props: {
+            movie: {
+                type: Object,
+                required: true
+            }
+            },
         data() {
             return {
                 updatedMovie: {
-                    id: -1,
+                    id: this.movie.ID,
                     name: '',
                     description: '',
                     releaseYear: '',
                     academyAward: '',
                     directorId: ''
-			}
+                }
             }
         },
         methods: {
+            showMovie() {
+                console.log(this.movie);
+                console.log(this.updatedMovie);
+
+            },
             saveMovie() {
+                this.updatedMovie.id = this.movie.id;
+
+                console.log(this.updatedMovie);
+
                 this.$emit('child-event', this.updatedMovie);
                 this.updatedMovie = {}
             },

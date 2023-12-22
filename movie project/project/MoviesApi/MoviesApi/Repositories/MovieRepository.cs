@@ -108,7 +108,7 @@ namespace MoviesApi.Repositories
 
         public Movie UpdateMovie(Movie movie)
         {
-            string queryString = "UPDATE dbo.MotionPictures SET Name = @Name, Description = @Description, ReleaseYear = @ReleaseYear, AcademyAward = @AcademyAward, DirectorId = @DirectorId) WHERE ID = @ID";
+            string queryString = "UPDATE dbo.MotionPictures SET Name = @Name, Description = @Description, ReleaseYear = @ReleaseYear, AcademyAward = @AcademyAward, DirectorId = @DirectorId WHERE ID = @ID";
             int rowsAffected = 0;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -128,6 +128,8 @@ namespace MoviesApi.Repositories
                         command.Parameters.AddWithValue("@ID", movie.ID);
 
                         rowsAffected = command.ExecuteNonQuery();
+                        Console.WriteLine(rowsAffected);
+
                         if (rowsAffected != 0)
                         {
                             return movie;
@@ -137,7 +139,6 @@ namespace MoviesApi.Repositories
                 catch (SqlException e)
                 {
                     Console.Write("There was an error");
-                        // TODO
                 }
                 finally
                 {

@@ -22,7 +22,7 @@
 					<td>{{ movie.academyAward }}</td>
 					<td>{{ movie.directorId }}</td>
 					<td>
-						<span class="clickable m-2" v-on:click.prevent="showUpdateMovieModal">
+						<span class="clickable m-2" v-on:click.prevent="showUpdateMovieModal(movie)">
 							<font-awesome-icon icon="fa-solid fa-pen-to-square" />
 						</span>
 						<span class="clickable m-2" v-on:click.prevent="showDeleteModal(movie)">
@@ -40,7 +40,7 @@
 	<add-movie-modal v-show="addMovieModalVisible" @child-event="handleChildEvent">
 	</add-movie-modal>
 
-	<update-movie-modal v-show="updateMovieModalVisible" @child-event="handleChildEvent"></update-movie-modal>
+	<update-movie-modal :movie="parentMovie" v-show="updateMovieModalVisible" @child-event="handleChildEvent"></update-movie-modal>
 
 	
 
@@ -88,7 +88,8 @@ export default {
 			movies: [],
 			movieToAdd: {},
 			movieToUpdate: {},
-			movieToDelete: {}
+			movieToDelete: {},
+			parentMovie: {}
 		}
 	},
 	
@@ -122,8 +123,11 @@ export default {
 			let response = await api_put(this.movieToUpdate);
 
 			if(response != null) {
-				console.log("hi");
+
 				this.getMovies();
+				console.log("laura");
+				console.log(response);
+
 			} else {
 				console.log("There was an error updating this movie.");
 			}
@@ -155,7 +159,8 @@ export default {
 		closeAddMovieModal() {
 			this.addMovieModalVisible = false;
 		},
-		showUpdateMovieModal() {
+		showUpdateMovieModal(movie) {
+			this.parentMovie = movie;
 			this.updateMovieModalVisible = true;
 		},
 		closeUpdateMovieModal() {
@@ -183,14 +188,12 @@ export default {
 				this.movieToAdd = payload;
 				this.addMovie();
 				this.closeAddMovieModal();
-			} else if (payload.id == -1) {
-				console.log('Received event from modal:', payload);
-
-				console.log("update movie")
+			} else if (payload.id > 0) {
 				this.movieToUpdate = payload;
-				console.log(this.movieToUpdate);
 
 				this.updateMovie(this.movieToUpdate);
+				console.log("update movie")
+
 				this.closeUpdateMovieModal();
 			}
 			 else if (payload == null) {

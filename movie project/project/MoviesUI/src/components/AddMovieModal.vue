@@ -6,7 +6,7 @@
             <br>
 
             <div>Name of Movie&colon;
-                <input class="field" id="movieName" type="text" v-model="addedMovie.name" required>
+                <input class="field" id="movieName" type="text" v-model="addedMovie.name" maxlength="50" required>
             </div>
             <br>
             
@@ -17,7 +17,7 @@
             <br>
 
             <div>Release Year&colon;
-                <input id="movieReleaseYear" type="text" v-model="addedMovie.releaseYear" required>
+                <input-date id="movieReleaseYear" type="text" v-model="addedMovie.releaseYear" required></input-date>
             </div>
             <br>
 
