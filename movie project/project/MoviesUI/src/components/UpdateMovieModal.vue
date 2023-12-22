@@ -6,29 +6,29 @@
             <br>
 
             <div>Name of Movie&colon;
-                <input class="field" id="movieName" type="text" v-model="updatedMovie.name" required>
+                <input class="field" id="movieName" type="text" v-model="updatedMovie.name" maxlength="50" required>
             </div>
             <br>
             
             <div>Description&colon;
-                <textarea id="movieDescription" v-model="updatedMovie.description" rows="3">
+                <textarea id="movieDescription" v-model="updatedMovie.description" rows="3" maxlength="500">
                 </textarea>
             </div>
             <br>
 
             <div>Release Year&colon;
-                <input id="movieReleaseYear" type="text" v-model="updatedMovie.releaseYear" required>
+                <input id="movieReleaseYear" type="text" v-model="updatedMovie.releaseYear" minlength="4" maxlength="4" required>
             </div>
             <br>
 
             <div>Academy Award&colon;
-                Yes <input id="movieAcademyAward" type="checkbox" v-model="updatedMovie.academyAward">
-                No <input id="movieAcademyAward" type="checkbox" v-model="updatedMovie.academyAward" required>
+                Yes <input id="movieAcademyAward" type="checkbox" v-model="updatedMovie.academyAward" :false-value="null">
+                No <input id="movieAcademyAward" type="checkbox" v-model="updatedMovie.academyAward"  :true-value="false" :false-value="null">
             </div>
             <br>
 
             <div>Director Id&colon;
-                <input id="movieDirectorId" type="text" v-model="updatedMovie.directorId">
+                <input id="movieDirectorId" type="number" v-model="updatedMovie.directorId">
             </div>
             <br>
 
@@ -61,15 +61,8 @@
             }
         },
         methods: {
-            showMovie() {
-                console.log(this.movie);
-                console.log(this.updatedMovie);
-
-            },
             saveMovie() {
                 this.updatedMovie.id = this.movie.id;
-
-                console.log(this.updatedMovie);
 
                 this.$emit('child-event', this.updatedMovie);
                 this.updatedMovie = {}
@@ -79,18 +72,6 @@
                 this.updatedMovie = {}
             },
 
-            // handleUpdateEvent(payload) {
-		// 	if (payload == 'cancel') {
-		// 		this.closeUpdateMovieModal();
-		// 	} else if (payload.id == 0) {
-		// 		console.log("update movie")
-		// 		this.movieToUpdate = payload;
-		// 		this.closeUpdateMovieModal();
-		// 	}
-		// 	 else if (payload == null) {
-		// 		console.log("error")
-		// 	}
-		// }
         }
     };
 </script>

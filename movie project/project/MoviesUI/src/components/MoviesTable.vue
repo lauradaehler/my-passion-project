@@ -111,7 +111,7 @@ export default {
 		async addMovie() {
 			let response = await api_post(this.movieToAdd);
 
-			if(response == true) {
+			if(response === true) {
 				this.closeAddMovieModal();
 				this.getMovies();
 			} else {
@@ -142,16 +142,6 @@ export default {
 				console.log("There was an error deleting this movie.");
 			}
 		},
-
-		// editMovie(movie) {
-		// 	this.updatedMovie.id = movie.id;
-		// 	this.updatedMovie.name = movie.name;
-		// 	this.updatedMovie.description = movie.description;
-		// 	this.updatedMovie.releaseYear = movie.releaseYear;
-		// 	this.updatedMovie.academyAward = movie.academyAward;
-		// 	this.updatedMovie.directorId = movie.directorId;
-		// },
-
 		
 		showAddMovieModal() {
 			this.addMovieModalVisible = true;
@@ -180,6 +170,7 @@ export default {
 			this.deleteSuccessfulVisible = false;
 		},
 		handleChildEvent(payload) {
+			console.log(payload);
 			if (payload == 'cancel') {
 				this.closeAddMovieModal();
 				this.closeUpdateMovieModal();
@@ -199,6 +190,7 @@ export default {
 			 else if (payload == null) {
 				console.log("error")
 			} else {
+				console.log("lets see if its going here")
 				// console.log('Received event from modal:', payload);
 				// this.movieToAdd = payload;
 				// this.addMovie();

@@ -11,25 +11,24 @@
             <br>
             
             <div>Description&colon;
-                <textarea id="movieDescription" v-model="addedMovie.description" rows="3">
+                <textarea id="movieDescription" v-model="addedMovie.description" rows="3" maxlength="500">
                 </textarea>
             </div>
             <br>
 
             <div>Release Year&colon;
-                <input-date id="movieReleaseYear" type="text" v-model="addedMovie.releaseYear" required></input-date>
+                <input id="movieReleaseYear" type="text" v-model="addedMovie.releaseYear" minlength="4" maxlength="4" required>
             </div>
             <br>
 
             <div>Academy Award&colon;
-                Yes <input id="movieAcademyAward" type="checkbox" v-model="addedMovie.academyAward">
-                No <input id="movieAcademyAward" type="checkbox" v-model="addedMovie.academyAward" required>
-
+                Yes <input id="movieAcademyAward" type="checkbox" v-model="addedMovie.academyAward" :false-value="null">
+                No <input id="movieAcademyAward" type="checkbox" v-model="addedMovie.academyAward"  :true-value="false" :false-value="null">
             </div>
             <br>
 
             <div>Director Id&colon;
-                <input id="movieDirectorId" type="text" v-model="addedMovie.directorId">
+                <input id="movieDirectorId" type="number" v-model="addedMovie.directorId">
             </div>
             <br>
 
@@ -57,8 +56,11 @@
         },
         methods: {
             saveMovie() {
+                this.addedMovie.id = 0;
+
                 this.$emit('child-event', this.addedMovie);
-                this.addedMovie = {}
+                this.addedMovie = {};
+
             },
             cancel() {
                 this.$emit('child-event', 'cancel');
