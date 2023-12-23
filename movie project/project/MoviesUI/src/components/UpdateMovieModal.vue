@@ -28,13 +28,14 @@
             <br>
 
             <div>Director Id&colon;
-                <input id="movieDirectorId" type="number" v-model="updatedMovie.directorId">
+                <input id="movieDirectorId" type="number" v-model="updatedMovie.directorId" min="1">
             </div>
             <br>
 
             <div class="button-container">
-                <button class="cancel-grey"  v-on:click="cancel">Cancel</button>
-                <button class="save-grey" type="submit">Save</button>
+                <button class="cancel-grey"  v-on:click="cancel" >Cancel</button>
+                <button class="none-selected" :disabled="!academyAwardSelected" v-if="!academyAwardSelected">Save</button>
+                <button class="save-grey" type="submit" v-if="academyAwardSelected">Save</button>
             </div>
         </form>
     </div>
@@ -64,14 +65,30 @@
             saveMovie() {
                 this.updatedMovie.id = this.movie.id;
 
+                
+                if (this.updatedMovie.description == '') {
+                    this.updatedMovie.description = '';
+                }
+                if (!this.updatedMovie.directorId) {
+                    this.updatedMovie.directorId = 0;
+                }
+
                 this.$emit('child-event', this.updatedMovie);
                 this.updatedMovie = {}
             },
             cancel() {
                 this.$emit('child-event', 'cancel');
                 this.updatedMovie = {}
-            },
-
+            }
+        },
+        computed: {
+            academyAwardSelected() {
+                if (this.updatedMovie.academyAward === true || this.updatedMovie.academyAward === false) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
     };
 </script>
@@ -120,8 +137,17 @@ h3 {
 
 .cancel-grey, .save-grey, .submit-grey {
     border-radius: 8px;
-	background-color: grey;
+	background-color: rgb(71, 71, 71);
 	border-width: 0cap;
+    color: white;
+    margin-left: 5px;
+}
+
+.none-selected {
+    border-radius: 8px;
+    background-color: rgb(203, 203, 203);
+	border-width: 0cap;
+	color: white;
     margin-left: 5px;
 }
 
@@ -129,7 +155,7 @@ h3 {
     border-radius: 8px;
 	background-color: rgb(255, 27, 133);
 	border-width: 0cap;
-	color: rgb(255, 251, 253);
+	color: white;
     margin-left: 5px;
 }
 

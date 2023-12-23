@@ -115,7 +115,8 @@ export default {
 				this.closeAddMovieModal();
 				this.getMovies();
 			} else {
-				console.log("There was an error deleting this movie.");
+				console.log(response)
+				console.log("There was an error adding this movie.");
 			}
 		},
 

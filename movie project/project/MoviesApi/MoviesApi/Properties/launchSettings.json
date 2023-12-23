@@ -7,6 +7,9 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "https://localhost:51505;http://localhost:51506"
+    },
+    "Profile 1": {
+      "commandName": "IIS"
     }
   }
 }

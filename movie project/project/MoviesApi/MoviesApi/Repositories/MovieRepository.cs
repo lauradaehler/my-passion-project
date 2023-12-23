@@ -91,8 +91,15 @@ namespace MoviesApi.Repositories
                     command.Parameters.AddWithValue("@Description", movie.Description);
                     command.Parameters.AddWithValue("@ReleaseYear", movie.ReleaseYear);
                     command.Parameters.AddWithValue("@AcademyAward", movie.AcademyAward);
-                    command.Parameters.AddWithValue("@DirectorId", movie.DirectorId);
-                    
+                    if (movie.DirectorId == 0)
+                    {
+                        command.Parameters.AddWithValue("@DirectorId", DBNull.Value);
+                    } else
+                    {
+                        command.Parameters.AddWithValue("@DirectorId", movie.DirectorId);
+                    }
+
+
                     rowsAffected = command.ExecuteNonQuery();
                     connection.Close();
                 }
@@ -124,7 +131,14 @@ namespace MoviesApi.Repositories
                         command.Parameters.AddWithValue("@Description", movie.Description);
                         command.Parameters.AddWithValue("@ReleaseYear", movie.ReleaseYear);
                         command.Parameters.AddWithValue("@AcademyAward", movie.AcademyAward);
-                        command.Parameters.AddWithValue("@DirectorId", movie.DirectorId);
+                        if (movie.DirectorId == 0)
+                        {
+                            command.Parameters.AddWithValue("@DirectorId", DBNull.Value);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@DirectorId", movie.DirectorId);
+                        }
                         command.Parameters.AddWithValue("@ID", movie.ID);
 
                         rowsAffected = command.ExecuteNonQuery();

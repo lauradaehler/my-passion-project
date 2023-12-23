@@ -1,6 +1,6 @@
 <template>
     <div class="modal-overlay">
-        <form class="add-movie-modal" v-on:submit.prevent="saveMovie">
+        <form class="add-movie-modal" v-on:submit.prevent="saveMovie" >
             
             <h3>Add a New Movie</h3>
             <br>
@@ -28,13 +28,14 @@
             <br>
 
             <div>Director Id&colon;
-                <input id="movieDirectorId" type="number" v-model="addedMovie.directorId">
+                <input id="movieDirectorId" type="number" v-model="addedMovie.directorId" min=1>
             </div>
             <br>
 
             <div class="button-container">
-                <button class="cancel"  v-on:click="cancel">Cancel</button>
-                <button class="save" type="submit">Save</button>
+                <button class="cancel"  v-on:click="cancel" >Cancel</button>
+                <button class="none-selected" :disabled="!academyAwardSelected" v-if="!academyAwardSelected">Save</button>
+                <button class="save" type="submit" v-if="academyAwardSelected">Save</button>
             </div>
         </form>
     </div>
@@ -58,6 +59,13 @@
             saveMovie() {
                 this.addedMovie.id = 0;
 
+                if (this.addedMovie.description == '') {
+                    this.addedMovie.description = '';
+                }
+                if (!this.addedMovie.directorId) {
+                    this.addedMovie.directorId = 0;
+                }
+
                 this.$emit('child-event', this.addedMovie);
                 this.addedMovie = {};
 
@@ -65,8 +73,16 @@
             cancel() {
                 this.$emit('child-event', 'cancel');
                 this.addedMovie = {}
-            },
-
+            }
+        },
+        computed: {
+            academyAwardSelected() {
+                if (this.addedMovie.academyAward === true || this.addedMovie.academyAward === false) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
     };
 </script>
@@ -107,9 +123,16 @@ h3 {
     border-radius: 8px;
 	background-color: rgb(255, 27, 133);
 	border-width: 0cap;
-	color: rgb(255, 251, 253);
+	color: white;
     margin-left: 5px;
 }
 
+.none-selected {
+    border-radius: 8px;
+    background-color: rgb(250, 167, 206);
+	border-width: 0cap;
+	color: white;
+    margin-left: 5px;
+}
 
 </style>
