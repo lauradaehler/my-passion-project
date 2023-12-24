@@ -3,24 +3,24 @@
 		<button class="add-movie">Add Movie</button>
 	</div>
 	<div id="moviesTable">
-		<table class="table table-dark table-striped table-hover">
-			<thead class="thead-light">
+		<table id="movies-table" class="table-light table-pink table-striped table-hover">
+			<thead class="thead-pink">
 				<tr>
-					<th>Name</th>
-					<th>Description</th>
-					<th>Release Year</th>
-					<th>Academy Award</th>
-					<th>Director ID</th>
+					<th class="th">Name</th>
+					<th class="th">Description</th>
+					<th class="th">Release Year</th>
+					<th class="th">Academy Award</th>
+					<th class="thd">Director ID</th>
 					<th style="min-width: 120px" scope="col"></th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr v-for="movie in movies" :key="movie.ID">
-					<td>{{ movie.name }}</td>
-					<td>{{ movie.description }}</td>
-					<td>{{ movie.releaseYear }}</td>
-					<td>{{ movie.academyAward }}</td>
-					<td>{{ movie.directorId }}</td>
+			<tbody class="tbody">
+				<tr class="tr" v-for="movie in movies" :key="movie.ID">
+					<td class="td">{{ movie.name }}</td>
+					<td class="td">{{ movie.description }}</td>
+					<td class="td">{{ movie.releaseYear }}</td>
+					<td class="td">{{ movie.academyAward }}</td>
+					<td class="tdd">{{ movie.directorId }}</td>
 					<td>
 						<span class="clickable m-2" v-on:click.prevent="showUpdateMovieModal(movie)">
 							<font-awesome-icon icon="fa-solid fa-pen-to-square" />
@@ -175,28 +175,24 @@ export default {
 			if (payload == 'cancel') {
 				this.closeAddMovieModal();
 				this.closeUpdateMovieModal();
+
 			} else if (payload.id == 0) {
-				console.log('Received event from modal:', payload);
+				console.log('New movie:', payload);
 				this.movieToAdd = payload;
 				this.addMovie();
 				this.closeAddMovieModal();
+
 			} else if (payload.id > 0) {
+				console.log('Updating movie:', payload)
 				this.movieToUpdate = payload;
-
 				this.updateMovie(this.movieToUpdate);
-				console.log("update movie")
-
 				this.closeUpdateMovieModal();
 			}
 			 else if (payload == null) {
-				console.log("error")
-			} else {
-				console.log("lets see if its going here")
-				// console.log('Received event from modal:', payload);
-				// this.movieToAdd = payload;
-				// this.addMovie();
-				// this.closeInfoModal();
+				console.log("error, payload is null");
 
+			} else {
+				console.log("error");
 			}
 		}
 		
@@ -217,7 +213,7 @@ export default {
 }
 .add-movie {
 	border-radius: 8px;
-	background-color: rgb(255, 78, 160);
+	background-color: rgb(255, 27, 133);
 	border-width: 0cap;
 	color: rgb(255, 251, 253);
 	font-family: 'Courier New', Courier, monospace;
@@ -243,5 +239,46 @@ export default {
 	padding-bottom: 10px;
     border-radius: 15px;
 }
+
+.thead-pink {
+	background-color: rgb(255, 180, 215);
+    color: rgb(253, 17, 127);
+	top: 10px;
+}
+
+.table-light {
+	background-color: rgb(253, 17, 127);
+	color: white;
+	font-size: large;
+}
+
+.table-light:hover {
+	color: rgb(255, 156, 202);
+}
+
+.tr:hover {
+	color: white;
+}
+
+.th, .td, .thd {
+	padding-left: 20px;
+}
+
+.thd {
+	column-width: 300px;
+}
+
+.tdd {
+	text-align: center;
+}
+
+
+td:last-child {
+	width: 100px;
+	padding-left: -10px;
+	text-align: center;
+}
+
+
 
 </style>

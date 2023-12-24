@@ -6,18 +6,18 @@
             <br>
 
             <div>Name of Movie&colon;
-                <input class="field" id="movieName" type="text" v-model="updatedMovie.name" maxlength="50" required>
+                <input class="field" id="movieName" type="text" v-model="updatedMovie.name" maxlength="50" style="width: 198px;" required>
             </div>
             <br>
             
             <div>Description&colon;
-                <textarea id="movieDescription" v-model="updatedMovie.description" rows="3" maxlength="500">
+                <textarea id="movieDescription" v-model="updatedMovie.description" style="width: 217px;" rows="3" maxlength="500">
                 </textarea>
             </div>
             <br>
 
             <div>Release Year&colon;
-                <input id="movieReleaseYear" type="text" v-model="updatedMovie.releaseYear" minlength="4" maxlength="4" required>
+                <input id="movieReleaseYear" type="text" v-model="updatedMovie.releaseYear" minlength="4" maxlength="4" style="width: 207px;" required>
             </div>
             <br>
 
@@ -28,14 +28,14 @@
             <br>
 
             <div>Director Id&colon;
-                <input id="movieDirectorId" type="number" v-model="updatedMovie.directorId" min="1">
+                <input id="movieDirectorId" type="number" v-model="updatedMovie.directorId" style="width: 217px;" min="1">
             </div>
             <br>
 
             <div class="button-container">
-                <button class="cancel-grey"  v-on:click="cancel" >Cancel</button>
+                <button class="cancel"  v-on:click="cancel" >Cancel</button>
                 <button class="none-selected" :disabled="!academyAwardSelected" v-if="!academyAwardSelected">Save</button>
-                <button class="save-grey" type="submit" v-if="academyAwardSelected">Save</button>
+                <button class="save" type="submit" v-if="academyAwardSelected">Save</button>
             </div>
         </form>
     </div>
@@ -106,17 +106,7 @@
 }
 
 .update-movie-modal {
-    background-color: white;
-    height: fit-content;
-    width: fit-content;
-    margin: auto;
-    padding: 20px;
-    border-radius: 15px;
-    font-weight: 550;
-}
-
-.update-movie-modal-pink {
-    background-color: rgb(255, 188, 220);
+    background-color: rgb(255, 180, 215);
     color: rgb(255, 27, 133);
     height: fit-content;
     width: fit-content;
@@ -135,23 +125,16 @@ h3 {
     justify-content: flex-end;
 }
 
-.cancel-grey, .save-grey, .submit-grey {
-    border-radius: 8px;
-	background-color: rgb(71, 71, 71);
-	border-width: 0cap;
-    color: white;
-    margin-left: 5px;
-}
 
 .none-selected {
     border-radius: 8px;
-    background-color: rgb(203, 203, 203);
+    background-color: rgb(250, 167, 206);
 	border-width: 0cap;
 	color: white;
     margin-left: 5px;
 }
 
-.cancel-pink, .save-pink, .submit-pink {
+.cancel, .save, .submit {
     border-radius: 8px;
 	background-color: rgb(255, 27, 133);
 	border-width: 0cap;

@@ -6,18 +6,18 @@
             <br>
 
             <div>Name of Movie&colon;
-                <input class="field" id="movieName" type="text" v-model="addedMovie.name" maxlength="50" required>
+                <input class="field" id="movieName" type="text" v-model="addedMovie.name" maxlength="50" style="width: 198px;" required>
             </div>
             <br>
             
             <div>Description&colon;
-                <textarea id="movieDescription" v-model="addedMovie.description" rows="3" maxlength="500">
+                <textarea id="movieDescription" v-model="addedMovie.description" style="width: 217px;" rows="3" maxlength="500">
                 </textarea>
             </div>
             <br>
 
             <div>Release Year&colon;
-                <input id="movieReleaseYear" type="text" v-model="addedMovie.releaseYear" minlength="4" maxlength="4" required>
+                <input id="movieReleaseYear" type="text" v-model="addedMovie.releaseYear" minlength="4" maxlength="4" style="width: 207px;" required>
             </div>
             <br>
 
@@ -28,7 +28,7 @@
             <br>
 
             <div>Director Id&colon;
-                <input id="movieDirectorId" type="number" v-model="addedMovie.directorId" min=1>
+                <input id="movieDirectorId" type="number" v-model="addedMovie.directorId" style="width: 217px;" min=1>
             </div>
             <br>
 
@@ -100,7 +100,7 @@
 }
 
 .add-movie-modal {
-    background-color: rgb(255, 188, 220);
+    background-color: rgb(255, 180, 215);
     color: rgb(255, 27, 133);
     height: fit-content;
     width: fit-content;
