@@ -53,7 +53,7 @@
             return {
                 updatedMovie: {
                     id: this.movie.ID,
-                    name: '',
+                    name: this.movie.name,
                     description: '',
                     releaseYear: '',
                     academyAward: '',
@@ -105,7 +105,7 @@
     background-color: #000000cc;
 }
 
-.update-movie-modal {
+/* .update-movie-modal {
     background-color: white;
     height: fit-content;
     width: fit-content;
@@ -124,7 +124,7 @@
     padding: 20px;
     border-radius: 15px;
     font-weight: 550;
-}
+} */
 
 h3 {
     text-align: center;

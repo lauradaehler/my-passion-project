@@ -1,4 +1,5 @@
 <template>
+	<header :mode="mode" @toggle="toggle"></header>
 	<div class="add-container" v-on:click.prevent="showAddMovieModal">
 		<button class="add-movie">Add Movie</button>
 	</div>
@@ -72,11 +73,12 @@
 import { api_getAll, api_post, api_put, api_delete } from "../api.js";
 import AddMovieModal from "./AddMovieModal.vue";
 import UpdateMovieModal from "./UpdateMovieModal.vue";
+import Header from "./Header.vue";
 
 export default {
 	components: {
 		AddMovieModal,
-		UpdateMovieModal
+		UpdateMovieModal,
 	},
 	
 	data() {
